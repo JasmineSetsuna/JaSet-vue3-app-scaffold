@@ -1,7 +1,9 @@
 // initialize the path
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-console.log("----",process.env.envMode);
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+require("dotenv").config({ path: `.env` });
+require("dotenv").config({ path: `.env.${envMode}` });
+console.log("---",envMode);
 
 module.exports = {
   // five key element
@@ -15,13 +17,13 @@ module.exports = {
   /**TypeError: item.plugins.unshift is not a function:
    * the reason is the plugins is null,need to fill it or annotate it
    */
-  plugins:[
+  plugins: [
     //plugins's config
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
-      inject: "body" //the loaction that the bundle js put in 
-    })
+      inject: "body", //the loaction that the bundle js put in
+    }),
   ],
   devServer: {
     hot: true,

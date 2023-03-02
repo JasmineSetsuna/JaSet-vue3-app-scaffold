@@ -4,8 +4,8 @@
   "description": "use webpack5 to bundle vue3 and vu3's ecology",
   "main": "main.js",
   "scripts": {
-    "test": "",
-    "dev": "cross-env envMode=dev webpack serve --config webpack.config.js --color --hot",
+    "prod": "",
+    "dev": "cross-env envMode=dev webpack --config webpack.config.js --color --hot",
     "serve": "npx webpack server"
   },
   "author": "",
