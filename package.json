@@ -6,7 +6,8 @@
   "scripts": {
     "prod": "cross-env envMode=prod webpack --config webpack.prod.js --color",
     "dev": "cross-env envMode=dev webpack server --config webpack.dev.js --color --hot",
-    "test": "cross-env envMode=dev webpack --config webpack.dev.js --color"
+    "test": "cross-env envMode=dev webpack --config webpack.dev.js --color",
+    "analy": "cross-env envMode=prod analyMode=true webpack --config webpack.prod.js --color"
   },
   "author": "",
   "license": "ISC",
@@ -20,14 +21,17 @@
     "babel-loader": "^9.1.2",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
+    "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss-loader": "^7.0.2",
     "sass": "^1.58.3",
     "sass-loader": "^13.2.0",
+    "terser-webpack-plugin": "^5.3.6",
     "vue-loader": "^17.0.1",
     "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.8.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-merge": "^5.8.0"
@@ -35,7 +39,8 @@
   "dependencies": {
     "-": "^0.0.1",
     "D": "^1.0.0",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   },
   "browserslist": [
     "> 0.1%",

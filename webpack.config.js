@@ -22,9 +22,8 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     filename: "./js/[name].[chunkhash].js",
     assetModuleFilename: "assets/images/[contenthash][ext]",
-    clearn: true,
+    clean: true,
   },
-  stats: "errors-only",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
@@ -104,11 +103,6 @@ module.exports = {
       },
       __VUE_OPTIONS_API__: false, //避免控制台警告信息
       __VUE_PROD_DEVTOOLS__: false,
-    }),
-    new HtmlWebpackPlugin({
-      template: "./index.html",
-      filename: "index.html",
-      inject: "body", //the loaction that the bundle js put in
     }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
