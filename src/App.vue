@@ -1,6 +1,7 @@
 <template>
   <div class="app-box">test page</div>
-  <img src="" alt="">
+  <img src="./assets/img/pic.jpeg" alt="">
+  <img src="./assets/img/test.png" alt="">
 </template>
 <script setup></script>
 <style>

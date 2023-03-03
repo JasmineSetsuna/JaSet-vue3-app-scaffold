@@ -23,6 +23,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "./js/[name].[chunkhash].js",
+    assetModuleFilename: "assets/images/[contenthash][ext]",
   },
   module: {
     rules: [
@@ -56,6 +57,19 @@ module.exports = {
           "sass-loader",
         ],
       },
+      // png and the other file
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        type: "asset", //asset can transform the bigger file into base64 format
+        generator: {
+          filename: "assets/images/[hash][ext][query]", 
+        },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 60 * 1024, // smaller than 60kb
+          },
+        },
+      },
     ],
   },
   /**TypeError: item.plugins.unshift is not a function:
@@ -78,19 +92,13 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename:"assets/styles/[contenthash].css"
-    })
+      filename: "assets/styles/[contenthash].css",
+    }),
   ],
   /** the webpack error:because webapck implement the .env.prod,so the env is production,but when run the defineplugin it has the conflict
    * the solution is setup optimization:{nodeEnv:false}
    */
   optimization: {
     nodeEnv: false,
-  },
-  devServer: {
-    hot: true,
-    open: true,
-    port: 8080,
-    host: "localhost",
   },
 };
