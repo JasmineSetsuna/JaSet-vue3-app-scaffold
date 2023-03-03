@@ -2,6 +2,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { VueLoaderPlugin } = require("vue-loader/dist/index");
 const envMode = process.env.envMode;
 require("dotenv").config({ path: `.env` }); //implement the .env extract the variable to the process.env
 require("dotenv").config({ path: `.env.${envMode}` });
@@ -36,6 +37,10 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
+      },
     ],
   },
   /**TypeError: item.plugins.unshift is not a function:
@@ -52,10 +57,11 @@ module.exports = {
       __VUE_PROD_DEVTOOLS__: false,
     }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: "./index.html",
       filename: "index.html",
       inject: "body", //the loaction that the bundle js put in
     }),
+    new VueLoaderPlugin(),
   ],
   /** the webpack error:because webapck implement the .env.prod,so the env is production,but when run the defineplugin it has the conflict
    * the solution is setup optimization:{nodeEnv:false}
