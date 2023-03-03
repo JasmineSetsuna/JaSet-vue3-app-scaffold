@@ -11,7 +11,6 @@ let env = {};
 for (const key in process.env) {
   if (key == "NODE_ENV" || prefixRE.test(key)) {
     env[key] = JSON.stringify(process.env[key]);
-    console.log(env[key]);
   }
 }
 
@@ -23,7 +22,22 @@ module.exports = {
     path: path.resolve(__dirname, "./dist"),
     filename: "./js/[name].[chunkhash].js",
   },
-  // module: {},
+  module: {
+    rules: [
+      {
+        test: /\.js$/, //mathc the js file
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+            plugins: [["@babel/plugin-transform-runtime"]],
+            cacheDirectory: true,
+          },
+        },
+        exclude: /node_modules/,
+      },
+    ],
+  },
   /**TypeError: item.plugins.unshift is not a function:
    * the reason is the plugins is null,need to fill it or annotate it
    */
@@ -47,7 +61,7 @@ module.exports = {
    * the solution is setup optimization:{nodeEnv:false}
    */
   optimization: {
-    nodeEnv: false
+    nodeEnv: false,
   },
   devServer: {
     hot: true,

@@ -4,13 +4,18 @@
   "description": "use webpack5 to bundle vue3 and vu3's ecology",
   "main": "main.js",
   "scripts": {
-    "prod": "",
-    "dev": "cross-env envMode=dev webpack server --config webpack.config.js --color --hot",
-    "serve": "npx webpack serve"
+    "prod": "cross-env envMode=prod webpack --config webpack.prod.js --color",
+    "dev": "cross-env envMode=dev webpack server --config webpack.dev.js --color --hot",
+    "test": "cross-env envMode=dev webpack --config webpack.dev.js --color"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/plugin-transform-runtime": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/runtime": "^7.21.0",
+    "babel-loader": "^9.1.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "html-webpack-plugin": "^5.5.0",
