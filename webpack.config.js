@@ -3,6 +3,7 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader/dist/index");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const envMode = process.env.envMode;
 require("dotenv").config({ path: `.env` }); //implement the .env extract the variable to the process.env
 require("dotenv").config({ path: `.env.${envMode}` });
@@ -25,6 +26,7 @@ module.exports = {
   },
   module: {
     rules: [
+      // js file
       {
         test: /\.js$/, //mathc the js file
         use: {
@@ -37,9 +39,22 @@ module.exports = {
         },
         exclude: /node_modules/,
       },
+      // vue file
       {
         test: /\.vue$/,
         loader: "vue-loader",
+      },
+      // scss && css file
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          "css-loader",
+          "postcss-loader",
+          "sass-loader",
+        ],
       },
     ],
   },
@@ -62,6 +77,9 @@ module.exports = {
       inject: "body", //the loaction that the bundle js put in
     }),
     new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename:"assets/styles/[contenthash].css"
+    })
   ],
   /** the webpack error:because webapck implement the .env.prod,so the env is production,but when run the defineplugin it has the conflict
    * the solution is setup optimization:{nodeEnv:false}
