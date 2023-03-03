@@ -1,12 +1,22 @@
 // initialize the path
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-require("dotenv").config({ path: `.env` });
+const envMode = process.env.envMode;
+require("dotenv").config({ path: `.env` }); //implement the .env extract the variable to the process.env
 require("dotenv").config({ path: `.env.${envMode}` });
-console.log("---",envMode);
+
+const prefixRE = /^VUE_APP_/;
+let env = {};
+for (const key in process.env) {
+  if (key == "NODE_ENV" || prefixRE.test(key)) {
+    env[key] = JSON.stringify(process.env[key]);
+    console.log(env[key]);
+  }
+}
 
 module.exports = {
-  // five key element
+  // five key element in webpack
   mode: "production",
   entry: path.resolve(__dirname, "./src/main.js"),
   output: {
@@ -19,12 +29,26 @@ module.exports = {
    */
   plugins: [
     //plugins's config
+    new webpack.DefinePlugin({
+      // 定义环境和变量
+      "process.env": {
+        ...env,
+      },
+      __VUE_OPTIONS_API__: false, //避免控制台警告信息
+      __VUE_PROD_DEVTOOLS__: false,
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       filename: "index.html",
       inject: "body", //the loaction that the bundle js put in
     }),
   ],
+  /** the webpack error:because webapck implement the .env.prod,so the env is production,but when run the defineplugin it has the conflict
+   * the solution is setup optimization:{nodeEnv:false}
+   */
+  optimization: {
+    nodeEnv: false
+  },
   devServer: {
     hot: true,
     open: true,
