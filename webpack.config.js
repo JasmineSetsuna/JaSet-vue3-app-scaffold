@@ -17,13 +17,25 @@ for (const key in process.env) {
 }
 
 module.exports = {
-  // five key element in webpack
-  mode: "production",
   entry: path.resolve(__dirname, "./src/main.js"),
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "./js/[name].[chunkhash].js",
     assetModuleFilename: "assets/images/[contenthash][ext]",
+    clearn: true,
+  },
+  stats: "errors-only",
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+      "@components": path.resolve(__dirname, "src/components"),
+      "@assets": path.resolve(__dirname, "src/assets"),
+      "@img": path.resolve(__dirname, "src/assets/img"),
+      "@utils": path.resolve(__dirname, "src/utils"),
+      "@api": path.resolve(__dirname, "src/api"),
+      "@css": path.resolve(__dirname, "src/assets/css"),
+      "@plugins": path.resolve(__dirname, "src/plugins"),
+    },
   },
   module: {
     rules: [
@@ -62,12 +74,20 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         type: "asset", //asset can transform the bigger file into base64 format
         generator: {
-          filename: "assets/images/[hash][ext][query]", 
+          filename: "assets/images/[hash][ext][query]",
         },
         parser: {
           dataUrlCondition: {
             maxSize: 60 * 1024, // smaller than 60kb
           },
+        },
+      },
+      //svg file
+      {
+        test: /\.(eot|svg|ttf|woff|woff2|)$/,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/fonts/[hash:8].[name][ext]",
         },
       },
     ],
