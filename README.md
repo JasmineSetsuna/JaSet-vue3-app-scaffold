@@ -8,3 +8,5 @@
 **set the devServer proxy to avoid cross-domain** 
 - in the webpack.dev.js you can set VUE_APP_useURL as axios.baseURL
 - and in the proxy also can set the secure(disable http)、 changeOrigin(set the target as host) and pathRewrite to replace baseurl or other url,
+
+[refer link](refer link:https://blog.csdn.net/weixin_42349568/article/details/124370794)
