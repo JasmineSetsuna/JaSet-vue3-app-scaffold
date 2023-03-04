@@ -19,36 +19,42 @@
   </div>
 </template>
 <script setup>
-import request from "./utils/api";
+import request from "./utils/http_sample";
+import httpRequest from "./utils/http";
 import { ref } from "vue";
 
 const renderTest = ref("fjdlskfj");
-function requestGet(data, url) {
-  return request({
+function httpGet(data, url) {
+  return httpRequest({
     url: url,
     method: "get",
     data,
   });
 }
+// function requestGet(data, url) {
+//   return request({
+//     url: url,
+//     method: "get",
+//     data,
+//   });
+// }
 async function testAxios() {
-  // try {
-  //   let params = {};
-  //   const res = await httpGet("/justtest", params);
-  //   console.log(renderTest);
-  //   renderTest.value = res.data.content;
-  // } catch(error) {
-  //   console.log(error);
-  // }
-
   try {
     let params = {};
-    const res = await requestGet(params, "/test");
-    console.log(res);
-    console.log(res.content);
-    renderTest.value = res.content;
-  } catch (error) {}
-}
+    const res = await httpGet(params, "/test");
+    renderTest.value = res.data.content;
+  } catch (error) {
+    console.log(error);
+  }
 
+  // try {
+  //   let params = {};
+  //   const res = await requestGet(params, "/test");
+  //   console.log(res);
+  //   console.log(res.content);
+  //   renderTest.value = res.content;
+  // } catch (error) {}
+}
 </script>
 <style>
 .app-box {

@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(
   (config) => {
+    console.log(config);
     config.params = { ...config.params, t: Date.now() };
     return config;
   },
@@ -24,31 +25,6 @@ axios.interceptors.response.use(
   }
 );
 
-const httpGet = function get(url, params) {
-  return new Promise((resolve, reject) => {
-    axios
-      .get(url, { params })
-      .then((res) => {
-        console.log(res.data);
-        resolve(res.data);
-      })
-      .catch((err) => {
-        reject(err.data);
-      });
-  });
-};
-
-const httpPost = function post(url, params) {
-  return new Promise((resolve, reject) => {
-    axios
-      .post(url, JSON.stringify(params))
-      .then((res) => {
-        resolve(res.data);
-      })
-      .catch((err) => {
-        reject(err.data);
-      });
-  });
-};
-
-export default {httpGet,httpPost}
+const httpRequest = axios.create({});
+export default httpRequest;
+// export default {httpGet,httpPost}
