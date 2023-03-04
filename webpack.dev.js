@@ -22,6 +22,15 @@ module.exports = merge(BaseWebpackConfig, {
     open: true,
     port: 8080,
     host: "localhost",
+    proxy: {
+      "/api": {
+        secure: false,
+        changeOrigin: true,
+        target:
+          "https://www.fastmock.site/mock/fa60191c75fe2ea22d75f95e931c8125/testaxios",
+        pathRewrite: { "^/api": "" },
+      },
+    },
   },
   optimization: {
     minimize: true,
